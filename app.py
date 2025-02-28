@@ -24,11 +24,11 @@ for msg in st.session_state.messages:
 if prompt := st.chat_input():
     write_message('user', prompt)
 
-    msg = gpt.chat_with_context(prompt)
-    stock_price = get_stock_price(msg)
+    response = gpt.chat_with_context(prompt)
+    answer = response['answer']
 
-    resposta = msg.split(' ', 1)[1]
+    stock_price = get_stock_price(response['stock'])
     if stock_price is not None:
-        resposta = resposta.replace("{cotacao_do_dia}", "{:.2f}".format(stock_price))
+        answer = answer.replace("{cotacao_do_dia}", "{:.2f}".format(stock_price))
 
-    write_message('assistant', resposta)
+    write_message('assistant', answer)
