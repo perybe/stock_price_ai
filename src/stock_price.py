@@ -1,6 +1,7 @@
 import time
 import yfinance as yf
 
+
 def get_stock_price(stock):
     try:
         stock_data = yf.Ticker(stock)
