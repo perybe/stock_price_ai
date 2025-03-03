@@ -4,7 +4,8 @@
 
 1. clone the repository and navigate to the project directory
 2. Make sure you have docker and docker-compose installed
-2. Run ```docker-compose build``` to build the app
+3. Copy the .env.example file to .env and add your chatgpt key value
+4. Run ```docker-compose build``` to build the app
 
 ## Run the app
 
@@ -13,6 +14,6 @@
 
 ## Run the tests
 
-1. Run ```pytest```
-1. Run ```pytest --cov-report term --cov=stock_price_ai tests/``` to get the coverage report
+1. Run ```docker-compose up -d```
+2. Run ```docker exec stock_price_ai-app-1 pytest``` to run the tests
 

@@ -1,6 +1,7 @@
 # tests/test_utils
 import pytest
 from unittest.mock import MagicMock
+import pandas as pd
 
 
 def mock_chat_with_context(mock_init_chat_model, return_value):
@@ -16,5 +17,6 @@ def mock_chat_with_context(mock_init_chat_model, return_value):
 def mock_stock_price_success(mock_ticker):
     # Mock the Ticker object and its methods
     mock_stock = MagicMock()
-    mock_stock.info = {"currentPrice": 150.00}
+    mock_stock.info = {"currentPrice": 110.00}
+    mock_stock.history.return_value = pd.Series([100.00, 110.00], index=["Open", "Close"])
     mock_ticker.return_value = mock_stock

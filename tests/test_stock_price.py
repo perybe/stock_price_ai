@@ -11,10 +11,11 @@ def test_get_stock_price_success(mock_ticker):
     mock_stock_price_success(mock_ticker)
 
     # Call the function
-    price = get_stock_price("AAPL")
+    price, pct_change = get_stock_price("us", "AAPL")
 
     # Assert the price is correct
-    assert price == 150.00
+    assert price == 110.00
+    assert pct_change == 10
     mock_ticker.assert_called_once_with("AAPL")
 
 
@@ -24,7 +25,7 @@ def test_get_stock_price_failure(mock_ticker):
     mock_ticker.side_effect = Exception("Error getting stock price")
 
     # Call the function
-    price = get_stock_price("AAPL")
+    price = get_stock_price("us", "AAPL")
 
     # Assert the price is None
     assert price is None

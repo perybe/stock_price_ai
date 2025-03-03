@@ -42,7 +42,7 @@ def test_write_message():
 def test_chat_input(mock_ticker, mock_chat_input, mock_lang_chain):
     # Mocking LangChainGpt response
     mock_chat_with_context(mock_lang_chain,
-                           {"stock": "AAPL", "answer": "Today`s price is: ${cotacao_do_dia}"})
+                           {"stock": "AAPL", "stock_locale": "us", "answer": "Today`s price is: ${daily_price}"})
     mock_chat_input.return_value = "Tell me about AAPL"
     # Mock stock price
     mock_stock_price_success(mock_ticker)
@@ -50,4 +50,4 @@ def test_chat_input(mock_ticker, mock_chat_input, mock_lang_chain):
     main()
 
     # Assert the final assistant answer includes the correct stock price
-    assert st.session_state["messages"][-1]["content"] == "Today`s price is: $150.00"
+    assert st.session_state["messages"][-1]["content"] == "Today`s price is: $110.00"

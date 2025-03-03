@@ -9,7 +9,8 @@ from tests.test_utils import mock_chat_with_context
 def test_chat_with_context(mock_init_chat_model):
     # Mock the init_chat_model function and its methods
     mock_structured_client = mock_chat_with_context(mock_init_chat_model,
-                                                    {"stock": "AAPL", "answer": "Today`s price is: ${cotacao_do_dia}"})
+                                                    {"stock": "AAPL", "stock_locale": "us",
+                                                     "answer": "Today`s price is: ${daily_price}"})
 
     # Initialize the LangChainGpt class
     chatbot = LangChainGpt()
@@ -18,5 +19,5 @@ def test_chat_with_context(mock_init_chat_model):
     response = chatbot.chat_with_context("Tell me about AAPL")
 
     # Assert the response is correct
-    assert response == {"stock": "AAPL", "answer": "Today`s price is: ${cotacao_do_dia}"}
+    assert response == {"stock": "AAPL", "stock_locale": "us", "answer": "Today`s price is: ${daily_price}"}
     mock_structured_client.invoke.assert_called_once_with("Tell me about AAPL")

@@ -1,3 +1,4 @@
+import logging
 from langchain.chat_models import init_chat_model
 import os
 
@@ -8,16 +9,20 @@ class LangChainGpt:
         self.client = init_chat_model(model, model_provider="openai")
         json_schema = {
             "title": "Chatbot",
-            "description": "You are a chatbot that helps users with the buying stocks. Your main focus is to return the symbol of the stock and also a good answer to the question.",
+            "description": "You are a chatbot that helps users with the buying stocks. Your main focus is to return the symbol of the stock, the country of that stock and also a good answer to the question. Please respond in the language of the user.",
             "type": "object",
             "properties": {
                 "stock": {
                     "type": "string",
-                    "description": "Stock Symbol and return null if the stock is not found",
+                    "description": "Stock Symbol and return null if the stock is not found. if it's a BR stock, it should have the .SA suffix",
+                },
+                "stock_locale": {
+                    "type": "string",
+                    "description": "Stock locale. It should be ['us', 'br', undefined]",
                 },
                 "answer": {
                     "type": "string",
-                    "description": "You should return an awesome answer to the user question with the value of the day in the format {cotacao_do_dia}. If the stock is not found, return a normal answer to the user question",
+                    "description": "You should return an awesome answer to the users question. It should include the value stock as {daily_price} in the place of the stock value and also the daily percentage change as {pct_change}%. If the stock is not found, return a normal answer to the user question",
                 },
             },
             "required": ["stock", "answer"],
@@ -28,8 +33,10 @@ class LangChainGpt:
     def chat(self, messages):
         response = self.client.invoke(messages)
         msg = response.content
+        logging.info(f"LangChainGPT::Response Chatbot response: {msg}")
         return msg
 
     def chat_with_context(self, message):
         response = self.structured_client.invoke(message)
+        logging.info(f"LangChainGPT::Response Chatbot response: {response}")
         return response
