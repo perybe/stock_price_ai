@@ -9,7 +9,7 @@ class LangChainGpt:
         self.client = init_chat_model(model, model_provider="openai")
         json_schema = {
             "title": "Chatbot",
-            "description": "You are a chatbot that helps users with the buying stocks. Your main focus is to return the symbol of the stock, the country of that stock and also a good answer to the question. Please respond in the language of the user.",
+            "description": "You are a chatbot that helps users with buying stocks. Your main focus is to return the symbol of the stock, the country of that stock and also a good answer to the question. Please respond in the language of the user.",
             "type": "object",
             "properties": {
                 "stock": {
@@ -22,7 +22,7 @@ class LangChainGpt:
                 },
                 "answer": {
                     "type": "string",
-                    "description": "You should return an awesome answer to the users question. It should include the value stock as {daily_price} in the place of the stock value and also the daily percentage change as {pct_change}%. If the stock is not found, return a normal answer to the user question",
+                    "description": "You should return an awesome answer to the users question. It should only return the value of today stocks and not any other days value. Include the value stock as {daily_price} in the place of the stock value and also the daily percentage change as {pct_change}%. If the stock is not found, return a normal answer to the users question. If the users asks for any stock value that isn't from today's date, please return that the stock value is not available.",
                 },
             },
             "required": ["stock", "answer"],

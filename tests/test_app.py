@@ -18,7 +18,7 @@ def test_start_chat_bot_initializes_session_state():
     assert len(st.session_state["messages"]) == 1
     assert st.session_state["messages"][0] == {
         "role": "assistant",
-        "content": "How can I help you?",
+        "content": "Como posso lhe ajudar? / How can I help you?",
     }
 
 

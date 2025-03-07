@@ -37,10 +37,12 @@ def main():
         try:
             response = gpt.chat_with_context(prompt)
             answer = response["answer"]
-            stock_price, pct_change = get_stock_price(response["stock_locale"], response["stock"])
-            if stock_price is not None:
-                answer = answer.replace("{daily_price}", "{:.2f}".format(stock_price))
-                answer = answer.replace("{pct_change}", "{:.2f}".format(pct_change))
+            if response["stock_locale"] and response["stock"]:
+                stock_price, pct_change = get_stock_price(response["stock_locale"],
+                                                          response["stock"])
+                if stock_price is not None:
+                    answer = answer.replace("{daily_price}", "{:.2f}".format(stock_price))
+                    answer = answer.replace("{pct_change}", "{:.2f}".format(pct_change))
 
             write_message("assistant", answer)
             logging.info(f"App::Response Assistant response: {answer}")
