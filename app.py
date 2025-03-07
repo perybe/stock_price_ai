@@ -35,7 +35,7 @@ def main():
         write_message("user", prompt)
         logging.info(f"App::InputReceived User input received: {prompt}")
         try:
-            response = gpt.chat_with_context(prompt)
+            response = gpt.chat_with_context(st.session_state.messages)
             answer = response["answer"]
             if response["stock_locale"] and response["stock"]:
                 stock_price, pct_change = get_stock_price(response["stock_locale"],
